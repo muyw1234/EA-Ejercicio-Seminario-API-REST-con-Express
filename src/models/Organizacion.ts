@@ -1,14 +1,17 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
+import { IUsuario } from './Usuario';
 
 export interface IOrganizacion {
     name: string;
+    usuarios: Types.ObjectId[] | IUsuario[]; // Array de referencias a usuarios o usuarios embebidos
 }
 
 export interface IOrganizacionModel extends IOrganizacion, Document {}
 
 const OrganizacionSchema: Schema = new Schema(
     {
-        name: { type: String, required: true }
+        name: { type: String, required: true },
+        usuarios: [{ type: Schema.Types.ObjectId, ref: 'Usuario' }]
     },
     {
         versionKey: false

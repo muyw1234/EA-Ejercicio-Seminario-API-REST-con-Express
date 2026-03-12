@@ -51,4 +51,14 @@ const deleteOrganizacion = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
-export default { createOrganizacion, readOrganizacion, readAll, updateOrganizacion, deleteOrganizacion };
+const getUsuariosByOrganizacion = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const usuarios = await OrganizacionService.getUsuariosByOrganizacion(req.params.organizacionId);
+        if (!usuarios) return res.status(404).json({ message: 'Organización no encontrada' });
+        return res.status(200).json(usuarios); 
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
+export default { createOrganizacion, readOrganizacion, readAll, updateOrganizacion, deleteOrganizacion, getUsuariosByOrganizacion };

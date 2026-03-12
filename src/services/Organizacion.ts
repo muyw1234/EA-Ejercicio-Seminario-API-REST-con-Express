@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Organizacion, { IOrganizacionModel, IOrganizacion } from '../models/Organizacion';
+import Usuario, { IUsuarioModel } from '../models/Usuario';
 
 const createOrganizacion = async (data: Partial<IOrganizacion>): Promise<IOrganizacionModel> => {
     const organizacion = new Organizacion({
@@ -30,4 +31,14 @@ const deleteOrganizacion = async (organizacionId: string): Promise<IOrganizacion
     return await Organizacion.findByIdAndDelete(organizacionId);
 };
 
-export default { createOrganizacion, getOrganizacion, getAllOrganizaciones, updateOrganizacion, deleteOrganizacion };
+const getUsuariosByOrganizacion = async (organizacionId: string): Promise<IOrganizacionModel | null> => {
+    return await Usuario.find({ organizacion: organizacionId })
+        .populate('organizacion') // Esto funciona gracias a que el campo ref está bien definido
+        .lean();
+    
+    
+    //return await Usuario.find({ organizacion: organizacionId }).lean();
+};
+
+
+export default { createOrganizacion, getOrganizacion, getAllOrganizaciones, updateOrganizacion, deleteOrganizacion, getUsuariosByOrganizacion };

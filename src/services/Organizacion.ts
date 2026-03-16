@@ -33,7 +33,7 @@ const deleteOrganizacion = async (organizacionId: string): Promise<IOrganizacion
 
 const getUsuariosByOrganizacion = async (organizacionId: string): Promise<IOrganizacionModel | null> => {
     return await Usuario.find({ organizacion: organizacionId })
-        .populate('organizacion') // Esto funciona gracias a que el campo ref está bien definido
+        .populate('organizacion') 
         .lean();
     
     
